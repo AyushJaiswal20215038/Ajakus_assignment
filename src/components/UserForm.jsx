@@ -39,7 +39,7 @@ function UserForm({ closeForm, user, formSubmit }) {
       setState({ ...State, Loading: false });
       closeForm(false);
     } catch (error) {
-      setState({ Loading: false, error: "Error Occured" });
+      setState({ Loading: false, error: "API Error Occured" });
     }
   };
   useEffect(() => {
@@ -108,6 +108,7 @@ function UserForm({ closeForm, user, formSubmit }) {
                 >
                   {State.Loading ? "...Loading" : "Submit form"}
                 </button>
+                {State.error !== null ? `${State.error}` : ""}
               </form>
             </div>
           </div>
