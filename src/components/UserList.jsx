@@ -7,9 +7,19 @@ function UserList() {
   const [userList, setUserList] = useState([]);
   const [isFormOpen, setIsFromOpen] = useState(false);
   const [selectedUser, setselectedUser] = useState(null);
+  const [State, setState] = useState({
+    Loading: false,
+    error: null,
+  });
   const handleGetUser = async () => {
-    const data = await api.getUser();
-    setUserList(data);
+    setState({ Loading: true, error: null });
+    try {
+      const data = await api.getUser();
+      setUserList(data);
+      setState({ Loading: false, ...State });
+    } catch (error) {
+      setState({ Loading: false, error: "Error occurred" });
+    }
   };
   const handleCloseForm = () => setIsFromOpen(false);
   const handleFormSubmit = (data) => {
@@ -27,15 +37,26 @@ function UserList() {
   };
 
   const handleDelete = async ({ user, index }) => {
-    const Isdeleted = await api.deleteuser(user.id);
-    if (Isdeleted)
-      setUserList([...userList.slice(0, index), ...userList.slice(index + 1)]);
+    setState({ Loading: true, error: null });
+    try {
+      const Isdeleted = await api.deleteuser(user.id);
+      setState({ ...State, Loading: false });
+      if (Isdeleted)
+        setUserList([
+          ...userList.slice(0, index),
+          ...userList.slice(index + 1),
+        ]);
+    } catch (error) {
+      setState({ Loading: false, error: "Error Occurred" });
+    }
   };
   useEffect(() => {
     handleGetUser();
   }, []);
   return (
     <div>
+      {State.error ? <p style={{ color: "red" }}>{State.error}</p> : ""}
+      {State.Loading ? <p>Loading...</p> : ""}
       <h2>UserList</h2>
       <button
         style={{ color: "rgb(255, 255, 255)" }}
