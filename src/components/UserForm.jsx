@@ -33,7 +33,7 @@ function UserForm({ closeForm, user, formSubmit }) {
         formSubmit(response);
       } else {
         const response = await api.updateUser(user.id, newUser);
-        console.log(response);
+        // console.log(response);
         formSubmit(response);
       }
       setState({ ...State, Loading: false });
@@ -65,7 +65,7 @@ function UserForm({ closeForm, user, formSubmit }) {
               <form className="needs-validation" novalidate>
                 <div className="form-row">
                   <div className="col-md-4 mb-3 input-txt">
-                    <label for="validationCustom01">Name</label>
+                    <label htmlFor="validationCustom01">Name</label>
                     <input
                       type="text"
                       name="name"
@@ -77,7 +77,7 @@ function UserForm({ closeForm, user, formSubmit }) {
                     />
                   </div>
                   <div className="col-md-4 mb-3 input-txt">
-                    <label for="validationCustom02">Email</label>
+                    <label htmlFor="validationCustom02">Email</label>
                     <input
                       type="email"
                       name="email"
@@ -89,7 +89,7 @@ function UserForm({ closeForm, user, formSubmit }) {
                     />
                   </div>
                   <div className="col-md-4 mb-3 input-txt">
-                    <label for="validationCustom02">Company Name</label>
+                    <label htmlFor="validationCustom02">Company Name</label>
                     <input
                       type="text"
                       name="company_name"
